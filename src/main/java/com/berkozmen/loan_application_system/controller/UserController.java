@@ -7,6 +7,7 @@ import com.berkozmen.loan_application_system.model.dto.UserSigninDTO;
 import com.berkozmen.loan_application_system.model.dto.UserSignupDTO;
 import com.berkozmen.loan_application_system.model.entity.User;
 import com.berkozmen.loan_application_system.model.mapper.UserMapper;
+import com.berkozmen.loan_application_system.service.CreditScoreService;
 import com.berkozmen.loan_application_system.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,11 +29,19 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private CreditScoreService creditScoreService;
+
 
     @GetMapping()
     //@ApiOperation(value = "User list method")
     public List<User> getAllUsers() {
         return userService.getAll();
+    }
+
+    @GetMapping("/{identityNumber}")
+    public ResponseEntity getUserByIdentityNumber(@PathVariable(name = "identityNumber") String identityNumber){
+        return ResponseEntity.status(HttpStatus.OK).body(userService.getByIdentityNumber(identityNumber));
     }
 
 
@@ -46,6 +55,7 @@ public class UserController {
     @PostMapping("/signup")
     public String signup(@RequestBody @Valid UserSignupDTO userSignupDTO) {
         User user = UserMapper.UserSignupDTOtoEntity(userSignupDTO);
+        user.setCreditScore(creditScoreService.createUserCreditScore());
         return userService.signup(user,false);
     }
 

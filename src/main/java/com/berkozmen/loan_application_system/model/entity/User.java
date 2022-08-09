@@ -44,8 +44,12 @@ public class User {
     @Column()
     private String phone;
 
-    @Column()
-    private Long creditScore;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "credit_score_id",referencedColumnName = "id")
+    private CreditScore creditScore;
+
+/*    @OneToOne(mappedBy = "user")
+    private LoanApplication loanApplication;*/
 
     //private List<LoanApplication> loanApplications;
 

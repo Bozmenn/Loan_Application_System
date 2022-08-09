@@ -28,12 +28,12 @@ public class GenericExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponseMap);
     }
 
-/*    @ExceptionHandler(Exception.class)
+    @ExceptionHandler(Exception.class)
     public ResponseEntity<Map<String, String>> handleEntityNotFoundException(Exception exception){
         Map<String, String > errorResponseMap = new HashMap<>();
         errorResponseMap.put("error_message",exception.getMessage());
         errorResponseMap.put("error_cause",exception.getCause().toString());
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponseMap);
-    }*/
+    }
 
 }
