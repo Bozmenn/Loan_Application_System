@@ -1,15 +1,15 @@
 package com.berkozmen.loan_application_system.model.dto;
 
+import com.berkozmen.loan_application_system.annotation.IdentityNumberValidation;
 import lombok.Getter;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 
 @Getter
 public class UserSigninDTO {
 
-    @NotBlank
-    private Long identityNumber;
+    @IdentityNumberValidation
+    private String identityNumber;
     @NotBlank
     private String password;
 

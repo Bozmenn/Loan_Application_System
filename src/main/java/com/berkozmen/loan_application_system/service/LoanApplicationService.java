@@ -28,8 +28,8 @@ public class LoanApplicationService {
         return loanApplicationRepository.findAll();
     }
 
-    public LoanApplication getByUser(User user) {
-        Optional<LoanApplication> loanApplication = loanApplicationRepository.findByUser(user);
+    public LoanApplication getByUserId(Long userId) {
+        Optional<LoanApplication> loanApplication = loanApplicationRepository.findByUserId(userId);
         return loanApplication.orElseThrow(() -> {
             log.error("Related loan application cannot find by user");
             return new EntityNotFoundException("Loan Application");
@@ -39,7 +39,8 @@ public class LoanApplicationService {
     public LoanApplication create(User user){
         LoanApplication loanApplication = loanApplicationResultCalculator(user);
         log.info("User loan application created successfully.");
-        return loanApplicationRepository.save(loanApplication);
+        LoanApplication savedLoanApplication = loanApplicationRepository.save(loanApplication);
+        return savedLoanApplication;
     }
 
     public void delete(User user ){

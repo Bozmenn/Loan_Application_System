@@ -34,15 +34,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // Entry points
         http.authorizeRequests()
                 .antMatchers("/users/signin").permitAll()
-                .antMatchers("/users/signup").permitAll();
+                .antMatchers("/users/signup").permitAll()
                 // Authorize any endpoint by a role
-/*                .antMatchers("/books/create").hasRole("ADMIN")
-                .antMatchers("/books/delete/{id}").hasRole("ADMIN")
-                .antMatchers("/books/update/{title}").hasRole("ADMIN")
-                .antMatchers("/users/delete/{username}").hasRole("ADMIN")
-                .antMatchers("/bookRequests//update_status/{id}/{status}").hasRole("ADMIN");*/
+                .antMatchers("/users").hasRole("ADMIN")
+                .antMatchers("/users/delete/{identityNumber}").hasRole("ADMIN")
+                .antMatchers("/loanApplications").hasRole("ADMIN")
                 // Disallow everything else..
-/*                .anyRequest().authenticated();*/
+                .anyRequest().authenticated();
 
         // Apply JWT
         http.apply(new JwtTokenFilterConfigurer(jwtTokenProvider));

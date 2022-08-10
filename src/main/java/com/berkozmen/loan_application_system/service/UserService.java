@@ -1,7 +1,6 @@
 package com.berkozmen.loan_application_system.service;
 
 import com.berkozmen.loan_application_system.exception.CustomJwtException;
-import com.berkozmen.loan_application_system.exception.EntityNotFoundException;
 import com.berkozmen.loan_application_system.model.Role;
 import com.berkozmen.loan_application_system.model.dto.UserDataDTO;
 import com.berkozmen.loan_application_system.model.entity.User;
@@ -19,7 +18,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -53,8 +51,8 @@ public class UserService {
             log.info("User successfully signed in");
             return jwtTokenProvider.createToken(identityNumber, userRepository.findByIdentityNumber(identityNumber).getRoles());
         } catch (AuthenticationException e) {
-            log.error("Invalid username/password supplied");
-            throw new CustomJwtException("Invalid username/password supplied", HttpStatus.BAD_REQUEST);
+            log.error("Invalid identityNumber/password supplied");
+            throw new CustomJwtException("Invalid identityNumber/password supplied", HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -67,7 +65,7 @@ public class UserService {
             log.info("User successfully signed up");
             return jwtTokenProvider.createToken(user.getIdentityNumber(), user.getRoles());
         } else {
-            throw new CustomJwtException("Username is already in use", HttpStatus.BAD_REQUEST);
+            throw new CustomJwtException("identityNumber is already in use", HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -81,12 +79,11 @@ public class UserService {
         }
     }
 
-    public User update(Long identityNumber, UserDataDTO userDataDTO){
+    public void update(String identityNumber, UserDataDTO userDataDTO){
         User updatedUser = getByIdentityNumber(String.valueOf(identityNumber));
         UserMapper.UserDataDTOtoUpdatedUser(updatedUser ,userDataDTO);
         log.info("User successfully updated");
-        return userRepository.save(updatedUser);
-
+        userRepository.save(updatedUser);
     }
 
 }

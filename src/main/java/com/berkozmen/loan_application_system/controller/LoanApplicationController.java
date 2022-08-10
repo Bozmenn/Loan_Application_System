@@ -32,7 +32,7 @@ public class LoanApplicationController {
     @GetMapping("/{identityNumber}")
     public ResponseEntity getLoanApplicationByIdentityNumber(@PathVariable(name = "identityNumber") String identityNumber){
         User byIdentityNumber = userService.getByIdentityNumber(identityNumber);
-        return ResponseEntity.status(HttpStatus.OK).body(loanApplicationService.getByUser(byIdentityNumber));
+        return ResponseEntity.status(HttpStatus.OK).body(loanApplicationService.getByUserId(byIdentityNumber.getId()));
     }
 
     //@ApiOperation(value = "Book create method")

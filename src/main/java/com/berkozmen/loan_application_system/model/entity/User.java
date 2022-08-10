@@ -1,5 +1,6 @@
 package com.berkozmen.loan_application_system.model.entity;
 
+import com.berkozmen.loan_application_system.annotation.IdentityNumberValidation;
 import com.berkozmen.loan_application_system.model.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -32,7 +33,6 @@ public class User {
     //@ApiModelProperty(value = "User name field of User object")
     private String surname;
 
-    @Size(min = 5, message = "Minimum password length: 5 characters")
     @Column(nullable = false)
     //@ApiModelProperty(value = "Password field of User object")
     private String password;
@@ -45,13 +45,8 @@ public class User {
     private String phone;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "credit_score_id",referencedColumnName = "id")
+    @JoinColumn(name = "credit_score_id")
     private CreditScore creditScore;
-
-/*    @OneToOne(mappedBy = "user")
-    private LoanApplication loanApplication;*/
-
-    //private List<LoanApplication> loanApplications;
 
     @ElementCollection(fetch = FetchType.EAGER)
     //@ApiModelProperty(value = "Roles field of User object")

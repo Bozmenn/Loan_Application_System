@@ -9,7 +9,8 @@ import java.util.Optional;
 
 public interface LoanApplicationRepository extends JpaRepository<LoanApplication, Long> {
 
-    Optional<LoanApplication> findByUser(User user);
+
+    Optional<LoanApplication> findByUserId(Long userId);
 
     void deleteByUser(User user);
 

@@ -20,13 +20,11 @@ public class LoanApplication {
     private Long id;
 
     @OneToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "user_id",referencedColumnName = "id")
+    @JoinColumn(name = "user_id")
     private User user;
 
     @Enumerated(EnumType.STRING)
     private Status status;
 
     private Long allowedCreditLimit;
-
-
 }
