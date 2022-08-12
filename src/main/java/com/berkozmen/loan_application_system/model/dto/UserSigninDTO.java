@@ -12,9 +12,9 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 public class UserSigninDTO {
 
-    @IdentityNumberValidation
+    //@IdentityNumberValidation
     private String identityNumber;
-    @NotBlank
+    //@NotBlank
     private String password;
 
 }
