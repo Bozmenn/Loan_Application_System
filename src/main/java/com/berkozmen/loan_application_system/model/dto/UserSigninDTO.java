@@ -1,11 +1,15 @@
 package com.berkozmen.loan_application_system.model.dto;
 
 import com.berkozmen.loan_application_system.annotation.IdentityNumberValidation;
-import lombok.Getter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
 
-@Getter
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserSigninDTO {
 
     @IdentityNumberValidation

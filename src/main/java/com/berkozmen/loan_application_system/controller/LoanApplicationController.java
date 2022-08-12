@@ -25,8 +25,8 @@ public class LoanApplicationController {
 
     @GetMapping()
     //@ApiOperation(value = "User list method")
-    public List<LoanApplication> getAllLoanApplications() {
-        return loanApplicationService.getAll();
+    public ResponseEntity getAllLoanApplications() {
+        return ResponseEntity.status(HttpStatus.OK).body(loanApplicationService.getAll());
     }
 
     @GetMapping("/{identityNumber}")

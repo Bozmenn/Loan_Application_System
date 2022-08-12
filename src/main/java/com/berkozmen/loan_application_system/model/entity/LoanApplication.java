@@ -4,8 +4,10 @@ import com.berkozmen.loan_application_system.model.Status;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Data
 @NoArgsConstructor
@@ -27,4 +29,8 @@ public class LoanApplication {
     private Status status;
 
     private Long allowedCreditLimit;
+
+    @CreationTimestamp
+    @Column
+    private Date createdDate;
 }

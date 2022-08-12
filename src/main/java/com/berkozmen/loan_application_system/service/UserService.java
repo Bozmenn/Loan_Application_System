@@ -52,7 +52,7 @@ public class UserService {
             return jwtTokenProvider.createToken(identityNumber, userRepository.findByIdentityNumber(identityNumber).getRoles());
         } catch (AuthenticationException e) {
             log.error("Invalid identityNumber/password supplied");
-            throw new CustomJwtException("Invalid identityNumber/password supplied", HttpStatus.BAD_REQUEST);
+            throw new CustomJwtException("Invalid identityNumber/password supplied", HttpStatus.UNAUTHORIZED);
         }
     }
 

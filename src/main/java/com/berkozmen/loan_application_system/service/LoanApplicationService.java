@@ -48,14 +48,15 @@ public class LoanApplicationService {
         log.info("User loan application deleted successfully.");
     }
 
+    //calculate loan app
     private LoanApplication loanApplicationResultCalculator(User user){
         LoanApplication loanApplication = new LoanApplication();
         loanApplication.setUser(user);
-        if(user.getCreditScore().getScore() < 500L){
+        if(user.getCreditScore() < 500L){
             loanApplication.setStatus(Status.DENIED);
             loanApplication.setAllowedCreditLimit(0L);
             return loanApplication;
-        } else if (500L <= user.getCreditScore().getScore() & user.getCreditScore().getScore()<1000L) {
+        } else if (500L <= user.getCreditScore() & user.getCreditScore()<1000L) {
             if(user.getMonthlySalary() < 5000L){
                 loanApplication.setStatus(Status.APPROVED);
                 loanApplication.setAllowedCreditLimit(10000L);

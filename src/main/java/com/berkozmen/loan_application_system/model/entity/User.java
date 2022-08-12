@@ -44,9 +44,8 @@ public class User {
     @Column()
     private String phone;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "credit_score_id")
-    private CreditScore creditScore;
+    @Column()
+    private Long creditScore;
 
     @ElementCollection(fetch = FetchType.EAGER)
     //@ApiModelProperty(value = "Roles field of User object")

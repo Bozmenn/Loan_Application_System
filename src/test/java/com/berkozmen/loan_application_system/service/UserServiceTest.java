@@ -3,12 +3,12 @@ package com.berkozmen.loan_application_system.service;
 import com.berkozmen.loan_application_system.exception.CustomJwtException;
 import com.berkozmen.loan_application_system.model.Role;
 import com.berkozmen.loan_application_system.model.dto.UserDataDTO;
-import com.berkozmen.loan_application_system.model.entity.CreditScore;
 import com.berkozmen.loan_application_system.model.entity.User;
 import com.berkozmen.loan_application_system.model.mapper.UserMapper;
 import com.berkozmen.loan_application_system.repository.UserRepository;
 import com.berkozmen.loan_application_system.security.JwtTokenProvider;
-import com.berkozmen.loan_application_system.utils.ObjectExtensions;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -22,7 +22,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import javax.persistence.MapKeyClass;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,30 +48,30 @@ class UserServiceTest {
     private UserService userService;
 
     @Test
-    void getAll() {
+    void getAll() throws JsonProcessingException {
         //init
         List<User> expectedUserList = getSampleUserList();
-        String expectedUserListJSON = ObjectExtensions.toJson(expectedUserList);
+        String expectedUserListJSON = new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(expectedUserList);
         //when
         Mockito.when(userRepository.findAll()).thenReturn(expectedUserList);
         //then
         List<User> actualUserList = userService.getAll();
-        String actualUserListJSON = ObjectExtensions.toJson(actualUserList);
+        String actualUserListJSON = new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(actualUserList);
         //validate
         Assertions.assertEquals(actualUserListJSON,expectedUserListJSON);
         Mockito.verify(userRepository,Mockito.times(1)).findAll();
     }
 
     @Test
-    void getByIdentityNumber_successful() {
+    void getByIdentityNumber_successful() throws JsonProcessingException {
         //init
         User expectedUser = getSampleUserList().get(0);
-        String expectedUserJSON = ObjectExtensions.toJson(expectedUser);
+        String expectedUserJSON = new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(expectedUser);
         //when
         Mockito.when(userRepository.findByIdentityNumber(expectedUser.getIdentityNumber())).thenReturn(expectedUser);
         //then
         User actualUser = userService.getByIdentityNumber(expectedUser.getIdentityNumber());
-        String actualUserJSON = ObjectExtensions.toJson(actualUser);
+        String actualUserJSON = new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(actualUser);
         //validate
         Assertions.assertEquals(actualUserJSON,expectedUserJSON);
         Mockito.verify(userRepository,Mockito.times(1)).findByIdentityNumber(expectedUser.getIdentityNumber());
@@ -185,9 +184,9 @@ class UserServiceTest {
         List<Role> userRole = new ArrayList<>();
         userRole.add(Role.ROLE_ADMIN);
         List<User> userList = new ArrayList<>();
-        User user1 = new User(1L, "11111111111", "Name1", "Surname1", "pass123", 10000L, "5551112233", new CreditScore(),userRole );
-        User user2 = new User(2L, "22222222222", "Name2", "Surname2", "pass1234", 20000L, "5551112233", new CreditScore(), userRole);
-        User user3 = new User(3L, "33333333333", "Name3", "Surname3", "pass12345", 30000L, "5551112233", new CreditScore(), userRole);
+        User user1 = new User(1L, "11111111111", "Name1", "Surname1", "pass123", 10000L, "5551112233", 500L,userRole );
+        User user2 = new User(2L, "22222222222", "Name2", "Surname2", "pass1234", 20000L, "5551112233", 1000L, userRole);
+        User user3 = new User(3L, "33333333333", "Name3", "Surname3", "pass12345", 30000L, "5551112233", 1500L, userRole);
         userList.add(user1);
         userList.add(user2);
         userList.add(user3);

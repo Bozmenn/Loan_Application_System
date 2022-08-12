@@ -1,6 +1,5 @@
 package com.berkozmen.loan_application_system.controller;
 
-
 import com.berkozmen.loan_application_system.model.dto.UserDataDTO;
 import com.berkozmen.loan_application_system.model.dto.UserSigninDTO;
 import com.berkozmen.loan_application_system.model.dto.UserSignupDTO;
@@ -34,8 +33,8 @@ public class UserController {
 
     @GetMapping()
     //@ApiOperation(value = "User list method")
-    public List<User> getAllUsers() {
-        return userService.getAll();
+    public ResponseEntity getAllUsers() {
+        return ResponseEntity.status(HttpStatus.OK).body(userService.getAll());
     }
 
     @GetMapping("/{identityNumber}")
@@ -43,26 +42,25 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(userService.getByIdentityNumber(identityNumber));
     }
 
-
     // @ApiOperation(value = "User Sign in  method")
     @PostMapping("/signin")
-    public String login(@Valid @RequestBody UserSigninDTO userLoginDTO) {
-        return userService.signin(String.valueOf(userLoginDTO.getIdentityNumber()), userLoginDTO.getPassword());
+    public ResponseEntity login(@Valid @RequestBody UserSigninDTO userLoginDTO) {
+        return ResponseEntity.status(HttpStatus.OK).body(userService.signin(String.valueOf(userLoginDTO.getIdentityNumber()), userLoginDTO.getPassword()));
     }
 
     //@ApiOperation(value = "User Sign up  method")
     @PostMapping("/signup")
-    public String signup(@Valid @RequestBody  UserSignupDTO userSignupDTO) {
+    public ResponseEntity signup(@Valid @RequestBody  UserSignupDTO userSignupDTO) {
         User user = UserMapper.UserSignupDTOtoEntity(userSignupDTO);
-        user.setCreditScore(creditScoreService.createUserCreditScore());
-        return userService.signup(user,false);
+        user.setCreditScore(creditScoreService.getUserCreditScore());
+        return ResponseEntity.status(HttpStatus.OK).body(userService.signup(user,false));
     }
 
     //@ApiOperation(value = "User delete  method for admin")
     @DeleteMapping(value = "/delete/{identityNumber}")
-    public String delete(@PathVariable String identityNumber) {
+    public ResponseEntity delete(@PathVariable String identityNumber) {
         userService.delete(identityNumber);
-        return "User " + String.valueOf(identityNumber) + " has been successfully deleted.";
+        return ResponseEntity.status(HttpStatus.OK).body("User " + identityNumber + " deleted successfully.");
     }
 
     //@ApiOperation(value = "User update method")
@@ -72,7 +70,7 @@ public class UserController {
             @Valid @RequestBody UserDataDTO userDataDTO)
     {
         userService.update(identityNumber,userDataDTO);
-        return ResponseEntity.status(HttpStatus.OK).body("User " + identityNumber + " successfully updated");
+        return ResponseEntity.status(HttpStatus.OK).body("User " + identityNumber + " updated successfully.");
     }
 
 }

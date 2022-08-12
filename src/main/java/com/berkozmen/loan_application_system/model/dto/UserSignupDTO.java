@@ -2,16 +2,23 @@ package com.berkozmen.loan_application_system.model.dto;
 
 import com.berkozmen.loan_application_system.annotation.IdentityNumberValidation;
 import com.berkozmen.loan_application_system.annotation.PhoneNumberValidation;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 
+import javax.persistence.Entity;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Data
+@Validated
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserSignupDTO {
 
-    @IdentityNumberValidation
+    @IdentityNumberValidation(message = "Identity number is invalid.")
     private String identityNumber;
 
     @NotBlank(message = "Name cannot be empty.")
