@@ -22,14 +22,14 @@ public class GenericExceptionHandler {
     }
 
     @ExceptionHandler(CustomJwtException.class)
-    public ResponseEntity<Map<String, String>> handleEntityNotFoundException(CustomJwtException exception){
+    public ResponseEntity<Map<String, String>> handleCustomJwtException(CustomJwtException exception){
         Map<String, String > errorResponseMap = new HashMap<>();
         errorResponseMap.put("error_message",exception.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponseMap);
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<Map<String, String>> handleEntityNotFoundException(Exception exception){
+    public ResponseEntity<Map<String, String>> handleException(Exception exception){
         Map<String, String > errorResponseMap = new HashMap<>();
         errorResponseMap.put("error_message",exception.getMessage());
         errorResponseMap.put("error_cause",exception.getCause().toString());
