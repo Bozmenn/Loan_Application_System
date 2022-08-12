@@ -82,7 +82,7 @@ class UserControllerTest {
         //when
         Mockito.when(userService.getByIdentityNumber(expectedUser.getIdentityNumber())).thenReturn(expectedUser);
         //then
-        MockHttpServletResponse response = mvc.perform(MockMvcRequestBuilders.get("/users/11111111111")
+        MockHttpServletResponse response = mvc.perform(MockMvcRequestBuilders.get("/users/86451948016")
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(MockMvcResultHandlers.print())
                 .andReturn().getResponse();
@@ -98,7 +98,7 @@ class UserControllerTest {
     @Test
     void login() throws Exception {
         //init
-        UserSigninDTO userSigninDTO = new UserSigninDTO("11111111111", "pass123");
+        UserSigninDTO userSigninDTO = new UserSigninDTO("86451948016", "pass123");
         String userSigninDTOJSON = new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(userSigninDTO);
         //when
         Mockito.when(userService.signin(userSigninDTO.getIdentityNumber(),userSigninDTO.getPassword())).thenReturn("Token");
@@ -119,8 +119,8 @@ class UserControllerTest {
     @Test
     void signup() throws Exception {
         //init
-        UserSignupDTO userSignupDTO = new UserSignupDTO("11111111111","Name1","Surname1","pass123",10000L,"5553332211");
-        User user = new User(null,"11111111111","Name1","Surname1","pass123",10000L,"5553332211",750L,new ArrayList<>());
+        UserSignupDTO userSignupDTO = new UserSignupDTO("86451948016","Name1","Surname1","pass123",10000L,"5553332211");
+        User user = new User(null,"86451948016","Name1","Surname1","pass123",10000L,"5553332211",750L,new ArrayList<>());
         String userSignupDTOJSON = new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(userSignupDTO);
         //when
         Mockito.when(creditScoreService.getUserCreditScore()).thenReturn(user.getCreditScore());
@@ -140,11 +140,11 @@ class UserControllerTest {
     @Test
     void delete() throws Exception {
         //init
-        String identityNumber = "11111111111";
+        String identityNumber = "86451948016";
         //when
         Mockito.doNothing().when(userService).delete(identityNumber);
         //then
-        MockHttpServletResponse response = mvc.perform(MockMvcRequestBuilders.delete("/users/delete/11111111111")
+        MockHttpServletResponse response = mvc.perform(MockMvcRequestBuilders.delete("/users/delete/86451948016")
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andDo(MockMvcResultHandlers.print())
@@ -158,13 +158,13 @@ class UserControllerTest {
     @Test
     void updateUser() throws Exception {
         //init
-        String identityNumber = "11111111111";
-        UserDataDTO userDataDTO = new UserDataDTO();
+        String identityNumber = "86451948016";
+        UserDataDTO userDataDTO = new UserDataDTO("Name1","Surname1","pass123",10000L,"5553332211");
         String userDataDTOJSON = new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(userDataDTO);
         //when
         Mockito.doNothing().when(userService).update(identityNumber,userDataDTO);
         //then
-        MockHttpServletResponse response = mvc.perform(MockMvcRequestBuilders.put("/users/update/11111111111")
+        MockHttpServletResponse response = mvc.perform(MockMvcRequestBuilders.put("/users/update/86451948016")
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(userDataDTOJSON))
@@ -180,7 +180,7 @@ class UserControllerTest {
         List<Role> userRole = new ArrayList<>();
         userRole.add(Role.ROLE_ADMIN);
         List<User> userList = new ArrayList<>();
-        User user1 = new User(1L, "11111111111", "Name1", "Surname1", "pass123", 10000L, "5551112233", 500L,userRole );
+        User user1 = new User(1L, "86451948016", "Name1", "Surname1", "pass123", 10000L, "5551112233", 500L,userRole );
         User user2 = new User(2L, "22222222222", "Name2", "Surname2", "pass1234", 20000L, "5551112233",1000L, userRole);
         User user3 = new User(3L, "33333333333", "Name3", "Surname3", "pass12345", 30000L, "5551112233", 1500L, userRole);
         userList.add(user1);

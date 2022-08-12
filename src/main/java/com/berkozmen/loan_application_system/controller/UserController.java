@@ -7,6 +7,8 @@ import com.berkozmen.loan_application_system.model.entity.User;
 import com.berkozmen.loan_application_system.model.mapper.UserMapper;
 import com.berkozmen.loan_application_system.service.CreditScoreService;
 import com.berkozmen.loan_application_system.service.UserService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +23,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/users")
 @Transactional
-//@Api(value = "User Api documentation")
 public class UserController {
 
     @Autowired
@@ -32,7 +33,6 @@ public class UserController {
 
 
     @GetMapping()
-    //@ApiOperation(value = "User list method")
     public ResponseEntity getAllUsers() {
         return ResponseEntity.status(HttpStatus.OK).body(userService.getAll());
     }
@@ -42,13 +42,11 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(userService.getByIdentityNumber(identityNumber));
     }
 
-    // @ApiOperation(value = "User Sign in  method")
     @PostMapping("/signin")
     public ResponseEntity login(@Valid @RequestBody UserSigninDTO userLoginDTO) {
         return ResponseEntity.status(HttpStatus.OK).body(userService.signin(String.valueOf(userLoginDTO.getIdentityNumber()), userLoginDTO.getPassword()));
     }
 
-    //@ApiOperation(value = "User Sign up  method")
     @PostMapping("/signup")
     public ResponseEntity signup(@Valid @RequestBody  UserSignupDTO userSignupDTO) {
         User user = UserMapper.UserSignupDTOtoEntity(userSignupDTO);
@@ -56,14 +54,12 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(userService.signup(user,false));
     }
 
-    //@ApiOperation(value = "User delete  method for admin")
     @DeleteMapping(value = "/delete/{identityNumber}")
     public ResponseEntity delete(@PathVariable String identityNumber) {
         userService.delete(identityNumber);
         return ResponseEntity.status(HttpStatus.OK).body("User " + identityNumber + " deleted successfully.");
     }
 
-    //@ApiOperation(value = "User update method")
     @PutMapping("/update/{identityNumber}")
     public ResponseEntity updateUser(
             @PathVariable String identityNumber,

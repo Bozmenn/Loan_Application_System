@@ -24,7 +24,6 @@ public class LoanApplicationController {
     private UserService userService;
 
     @GetMapping()
-    //@ApiOperation(value = "User list method")
     public ResponseEntity getAllLoanApplications() {
         return ResponseEntity.status(HttpStatus.OK).body(loanApplicationService.getAll());
     }
@@ -35,7 +34,6 @@ public class LoanApplicationController {
         return ResponseEntity.status(HttpStatus.OK).body(loanApplicationService.getByUserId(byIdentityNumber.getId()));
     }
 
-    //@ApiOperation(value = "Book create method")
     @PostMapping("/create/{identityNumber}")
     public ResponseEntity createLoanApplication(@PathVariable(name = "identityNumber") String identityNumber){
         User byIdentityNumber = userService.getByIdentityNumber(identityNumber);
@@ -43,7 +41,6 @@ public class LoanApplicationController {
         return ResponseEntity.status(HttpStatus.CREATED).body(loanApplication);
     }
 
-    //@ApiOperation(value = "Book delete method")
     @DeleteMapping("/delete/{identityNumber}")
     public ResponseEntity deleteLoanApplication(@PathVariable(name = "identityNumber") String identityNumber){
         User byIdentityNumber = userService.getByIdentityNumber(identityNumber);
