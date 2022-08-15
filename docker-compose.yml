@@ -4,7 +4,8 @@ services:
     image: loan_application_system
     build: ./
     ports:
-      - "8085:8085"
+    #localhost:containerhost
+      - "8085:8080"
     restart: always
     depends_on:
       - postgres-db
