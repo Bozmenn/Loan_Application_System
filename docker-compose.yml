@@ -1,0 +1,20 @@
+version: '3.1'
+services:
+  loan_application_system:
+    image: loan_application_system
+    build: ./
+    ports:
+      - "8085:8085"
+    restart: always
+    depends_on:
+      - postgres-db
+    links:
+      - postgres-db
+  postgres-db:
+    image: postgres:14.2
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=loan_application_system_db
